@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Add item</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item>
+    <ion-label position="floating">What not to do?</ion-label>
+    <ion-input [(ngModel)]="title"></ion-input>
+  </ion-item>
+
+   <ion-item>
+    <ion-label position="floating">Category (Optional)</ion-label>
+    <ion-input [(ngModel)]="category"></ion-input>
+  </ion-item>
+
+  <ion-row>
+    <ion-col size="6">
+      <ion-button (click)="dismiss()" expand="block" fill="clear" shape="round">
+        Cancel
+      </ion-button>
+    </ion-col>
+
+    <ion-col size="6">
+      <ion-button (click)="save()" expand="block" fill="clear" shape="round">
+       Save
+     </ion-button>
+    </ion-col>
+  </ion-row>
+</ion-content>
