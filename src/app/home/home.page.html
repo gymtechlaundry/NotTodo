@@ -1,26 +1,33 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>
-      Not Todo
-    </ion-title>
-  </ion-toolbar>
+<ion-header class="ion-no-border">
+  <app-toolbar></app-toolbar>
 </ion-header>
 <ion-content>
   <ion-text color="primary">
-    <h1>Because productivity is overrated.</h1>
+    <h3>Because productivity is overrated.</h3>
   </ion-text>
-  <ion-button (click)="openModal()">
-    Add NOT Todo
-    <ion-icon slot="end" name="add-outline"></ion-icon>
-  </ion-button>
+
 
   <ion-list>
-    <ion-item *ngFor="let item of items">
-      <ion-label>
-        <h2>{{ item.title }}</h2>
-        <p>Fails: {{ item.failCount }}</p>
-      </ion-label>
-    </ion-item>
+    <ion-item-sliding *ngFor="let item of todoItems()" #slidingItem>
+        <ion-item button (click)="logFail(item.id)">
+          <ion-label class="container">
+            <!-- <h2>{{ item.title }}</h2>
+            <p>Fails: {{ item.failCount }}</p> -->
+            <h2>Doomscrolling</h2>
+            <p>Fails: 4</p>
+          </ion-label>
+        </ion-item>
+        <ion-item-options side="end">
+          <ion-item-option color="danger" (click)="deleteItemById(item.id, slidingItem)">
+            Delete
+          </ion-item-option>
+        </ion-item-options>
+    </ion-item-sliding>
   </ion-list>
-
 </ion-content>
+<ion-footer>
+  <ion-button expand="full" (click)="goToAddItem()">
+    Add "NOT Todo" item
+    <ion-icon slot="end" name="add-outline"></ion-icon>
+  </ion-button>
+</ion-footer>

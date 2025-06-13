@@ -39,12 +39,14 @@ export class StorageService {
       CREATE TABLE IF NOT EXISTS not_todo_items (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         title TEXT NOT NULL,
-        CATEGORY TEXT,
-        fail_count INTEGER DEFAULT 0,
-        created_at TEXT NOT NULL,
-        last_failed TEXT
+        category TEXT,
+        failCount INTEGER DEFAULT 0,
+        createdAt TEXT NOT NULL,
+        lastFailed TEXT
       );
     `;
+
+    await this.db.execute(query);
   }
 
   async addItem(item: NotToDoItem): Promise<void> {
@@ -53,8 +55,17 @@ export class StorageService {
     const values = [item.title, item.category, item.failCount, item.createdAt];
 
     await this.db.run(
-      `INSERT INTO not_todo_items (title, category, fail_count, created_at) VALUES (?, ?, ?, ?);`,
+      `INSERT INTO not_todo_items (title, category, failCount, createdAt) VALUES (?, ?, ?, ?);`,
       values
+    );
+  }
+
+  async deleteItem(id: number): Promise<void> {
+    if (!this.db) throw new Error('Database not initialized');
+
+    await this.db.run(
+      `DELETE FROM not_todo_items WHERE id = ?;`,
+      [id]
     );
   }
   
@@ -62,7 +73,10 @@ export class StorageService {
     if (!this.db) throw new Error('Database not initialized');
   
     const result = await this.db.query('SELECT * FROM not_todo_items');
-    return (result.values || []) as NotToDoItem[];
+    
+    const items: NotToDoItem[] = (result.values || []) as NotToDoItem[];
+    return items;
+    
   }
 
   async incrementFail(id: number): Promise<void> {
@@ -70,7 +84,7 @@ export class StorageService {
     const now = new Date().toISOString();
 
     await this.db.run(
-      `UPDATE not_todo_items SET fail_count = fail_count + 1, last_failed = ? WHERE id = ?;`,
+      `UPDATE not_todo_items SET failCount = failCount + 1, lastFailed = ? WHERE id = ?;`,
       [now, id]
     );
   }
@@ -80,7 +94,7 @@ export class StorageService {
 
     try {
       const result = await this.db.query(
-        `SELECT MAX(last_failed) AS lastFail FROM not_todo_items`
+        `SELECT MAX(lastFailed) AS lastFail FROM not_todo_items`
       );
 
       const lastFailStr = result.values?.[0]?.lastFail;

@@ -27,6 +27,10 @@ export class NotTodoService {
     await this.storage.addItem(item);
   }
 
+  async deleteItemById(id: number) {
+    await this.storage.deleteItem(id);
+  }
+
   getItems(): Promise<NotToDoItem[]> {
     return this.storage.getItems();
   }

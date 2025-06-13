@@ -1,25 +1,25 @@
 import { Component, OnInit } from '@angular/core';
-import { IonHeader, IonToolbar, IonTitle, IonContent, IonText, IonButton, IonIcon, IonLabel, IonItem, IonList } from '@ionic/angular/standalone';
-import { ModalController } from '@ionic/angular'
-import { AddItemModalComponent } from '../components/add-item-modal/add-item-modal.component';
+import { IonFooter, IonHeader, IonContent, IonText, IonButton, IonIcon, IonLabel, IonItem, IonList, IonItemSliding, IonItemOptions, IonItemOption } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { addOutline } from 'ionicons/icons';
-import { NotToDoItem } from '../models/not-todo-item';
 import { NotTodoService } from '../services/not-todo.service';
-import { CommonModule } from '@angular/common';
+import { CommonModule, } from '@angular/common';
+import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { todoItems } from '../utility/global-signals';
+import { ToolbarComponent } from "../components/toolbar/toolbar.component";
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
-  imports: [IonList, IonItem, IonLabel, IonIcon, IonButton, IonText, IonHeader, IonToolbar, IonTitle, IonContent, CommonModule],
-  providers: [ ModalController ]
+  imports: [IonFooter, IonItemOption, IonItemOptions, IonItemSliding, FormsModule, IonList, IonItem, IonLabel, IonIcon, IonButton, IonText, IonHeader, IonContent, CommonModule, ToolbarComponent],
 })
 export class HomePage implements OnInit {
-  items: NotToDoItem[] = [];
+  todoItems = todoItems;
   newItem: string = ''
 
-  constructor(private modalCtrl: ModalController, private notTodoService: NotTodoService) {
+  constructor(private notTodoService: NotTodoService, private router: Router) {
     addIcons({
       addOutline
     })
@@ -35,14 +35,7 @@ export class HomePage implements OnInit {
   }
 
   async loadItems() {
-    this.items = await this.notTodoService.getItems();
-  }
-
-  async addItem() {
-    if (!this.newItem) return;
-    await this.notTodoService.addItem(this.newItem);
-    this.newItem = '';
-    await this.loadItems();
+    this.todoItems.set(await this.notTodoService.getItems());
   }
 
   async logFail(id:number) {
@@ -50,15 +43,14 @@ export class HomePage implements OnInit {
     await this.loadItems();
   }
 
-  async openModal() {
-    const modal = await this.modalCtrl.create({
-      component: AddItemModalComponent,
-    });
+  goToAddItem() {
+    this.router.navigateByUrl('add-item')
+  }
 
-    await modal.present();
-
-    const { data } = await modal.onWillDismiss();
-    console.log('Modal returned:', data);
+  async deleteItemById(id: number, slidingItem: IonItemSliding) {
+    await this.notTodoService.deleteItemById(id)
+    this.todoItems.update(currentItems => currentItems.filter(item => item.id !== id));
+    slidingItem.close();
   }
 
 

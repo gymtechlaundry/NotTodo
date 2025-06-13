@@ -1,0 +1,41 @@
+<ion-header class="ion-no-border">
+  <app-toolbar></app-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-text color="primary">
+    <h3>Own up to your failures.</h3>
+  </ion-text>
+  
+  <div class="content">
+    <ion-item>
+      <ion-input autocapitalize="sentences" label="What not to do?" labelPlacement="floating" name="title" [(ngModel)]="title" placeholder="Ex. Doomscrolling"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-input autocapitalize="words" label="Category (optional)" labelPlacement="floating" name="category" [(ngModel)]="category" placeholder="Ex. Productivity Killer"></ion-input>
+    </ion-item>
+  
+    <!-- <ion-item>
+      <ion-select label="Category (optional)" labelPlacement="floating" interface="ion-modal" name="category" [(ngModel)]="category">
+          <ion-select-option value="Productivity Killer">Productivity Killer</ion-select-option>
+          <ion-select-option value="Other">Other</ion-select-option>
+      </ion-select>
+    </ion-item> -->
+  
+    <ion-row>
+      <ion-col size="6">
+        <ion-button (click)="cancel()" expand="block" fill="clear" shape="round">
+          Cancel
+        </ion-button>
+      </ion-col>
+  
+      <ion-col size="6">
+        <ion-button (click)="save()" expand="block" fill="clear" shape="round">
+          Save
+       </ion-button>
+      </ion-col>
+    </ion-row>
+  </div>
+</ion-content>
+
