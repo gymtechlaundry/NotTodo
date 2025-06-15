@@ -2,82 +2,96 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { NgChartsModule } from 'ng2-charts';
-import Chart from 'chart.js/auto';
-import { ToolbarComponent } from "../components/toolbar/toolbar.component";
+import Chart, { ChartConfiguration } from 'chart.js/auto';
+
+import { ToolbarComponent } from '../components/toolbar/toolbar.component';
 import { NotToDoItem } from '../models/not-todo-item';
 import { NotTodoService } from '../services/not-todo.service';
 import { chartColors } from '../utility/chart-colors';
 
 @Component({
   selector: 'app-stats',
+  standalone: true,
   imports: [CommonModule, IonicModule, NgChartsModule, ToolbarComponent],
   templateUrl: './stats.page.html',
-  styleUrls: ['./stats.page.scss']
+  styleUrls: ['./stats.page.scss'],
 })
 export class StatsPage {
   items: NotToDoItem[] = [];
+  chart: Chart<'pie'> | null = null;
+  totalFails: number = 0;
 
   constructor(private notTodoService: NotTodoService) {}
 
-  async ngOnInit() {
+  async ionViewWillEnter() {
     await this.getItems();
-    console.log(this.items.map(row => row.failCount));
-    
-    await this.createChart();
+    this.getTotalFails();
+    this.renderChart();
   }
-
+  
   async getItems() {
     this.items = await this.notTodoService.getItems();
   }
 
-  async createChart() {
-    const chartElement = document.getElementById('chart') as HTMLCanvasElement | null;
-    if (!chartElement) {
-      console.error("Chart element not found");
-      return;
-    }
-    const total = this.items.reduce((a, b) => a + b.failCount, 0);
-
-    new Chart(
-      chartElement,
-      {
-        type: 'pie',
-        data: {
-          labels: this.items.map(row => row.category),
-          datasets: [
-            {
-              data: this.items.map(row => row.failCount),
-              backgroundColor: chartColors
-            }
-          ]
+  getTotalFails() {
+    this.totalFails = this.items.reduce((sum, item) => sum + (item.failCount || 0), 0);
+  }
+  
+  renderChart() {
+    const chartElement = document.getElementById('chart') as HTMLCanvasElement;
+    if (!chartElement) return;
+    
+    const data = this.items.map(item => item.failCount);
+    const labels = this.items.map(item => item.category || 'Uncategorized');
+    const total = data.reduce((sum, val) => sum + val, 0);
+    
+    const config: ChartConfiguration<'pie'> = {
+      type: 'pie',
+      data: {
+        labels,
+        datasets: [{
+          data,
+          backgroundColor: chartColors,
+        }]
+      },
+      options: {
+        animation: {
+          duration: 1000,
+          easing: 'easeInOutQuart'
         },
-        options: {
-          plugins: {
-            legend: {
-              position: 'bottom',
-              labels: {
-                generateLabels: (chart) => {
-                  const dataset = chart.data.datasets[0];
-                  const bgColors = dataset.backgroundColor as string[];
-                  return chart.data.labels!.map((label, i) => {
-                    const value = dataset.data[i] as number;
-                    const percentage = ((value / total) * 100).toFixed(0);
-
-                    return {
-                      text: `${label} (${percentage}%)`,
-                      fillStyle: bgColors[i],
-                      strokeStyle: '#fff',
-                      lineWidth: 1,
-                      hidden: !chart.getDataVisibility(i),
-                      index: i
-                    }
-                  })
-                }
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'bottom',
+            labels: {
+              generateLabels: (chart) => {
+                const dataset = chart.data.datasets[0];
+                const bgColors = dataset.backgroundColor as string[];
+                return chart.data.labels!.map((label, i) => {
+                  const value = dataset.data[i] as number;
+                  const percent = ((value / total) * 100).toFixed(0);
+                  return {
+                    text: `${label} (${percent}%)`,
+                    fillStyle: bgColors[i],
+                    strokeStyle: '#fff',
+                    lineWidth: 1,
+                    usePointStyle: true,
+                    hidden: !chart.getDataVisibility(i),
+                    index: i
+                  };
+                });
               }
             }
           }
         }
       }
-    )
+    };
+
+    // Destroy previous chart if it exists
+    if (this.chart) {
+      this.chart.destroy();
+    }
+
+    this.chart = new Chart(chartElement, config);
   }
 }

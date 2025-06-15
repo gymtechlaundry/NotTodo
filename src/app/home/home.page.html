@@ -11,10 +11,8 @@
     <ion-item-sliding *ngFor="let item of todoItems()" #slidingItem>
         <ion-item button (click)="logFail(item.id)">
           <ion-label class="container">
-            <!-- <h2>{{ item.title }}</h2>
-            <p>Fails: {{ item.failCount }}</p> -->
-            <h2>Doomscrolling</h2>
-            <p>Fails: 4</p>
+            <h2>{{ item.title }}</h2>
+            <p>Fails: {{ item.failCount }}</p>
           </ion-label>
         </ion-item>
         <ion-item-options side="end">

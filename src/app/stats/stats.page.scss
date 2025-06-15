@@ -5,16 +5,23 @@
 }
 
 ion-content {
-    ion-text {
-        display: flex;
-        justify-content: center;
-        color: rgb(95, 90, 90);
-        height: 20%; // Temporary to align chart vertically
-        h3 {
-            margin: 0 0 10px 0;
-            font-style: italic;
-        }
+  display: flex;
+  --padding-top: 1rem;
+  --padding-bottom: 2rem;
+
+  ion-text {
+    display: flex;
+    justify-content: center;
+    color: #bbbbbb;
+    margin-bottom: 1rem;
+
+    h3 {
+      margin: 0;
+      font-style: italic;
+      font-weight: 500;
+      font-size: 1.1rem;
     }
+  }
 }
 
 .stats-section {
@@ -22,17 +29,21 @@ ion-content {
   margin-bottom: 2rem;
 
   h2 {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     margin-bottom: 0.25rem;
-    color: #bbbbbb;
+    color: #ccc;
+    font-weight: 500;
   }
 
   p.fail-count,
   p.streak {
     font-size: 2rem;
     font-weight: bold;
-    color: #ff6384;
     margin-bottom: 1rem;
+  }
+
+  p.fail-count {
+    color: #ff6384;
   }
 
   p.streak {
@@ -40,21 +51,19 @@ ion-content {
   }
 }
 
-.container {
-  display: flex;
-  flex-direction: column;
-}
-
 .chart-container {
-  align-self: center;
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
   width: 100%;
-  max-width: 360px;
-  padding: 1rem;
+  padding: 1.5rem 0;
 
   canvas {
-    display: block;
-    width: 100% !important;
-    max-width: 400px;
+    max-width: 90%;
     height: auto !important;
+    // background: #1e1e1e;
+    border-radius: 16px;
+    padding: 1rem;
+    // box-shadow: 0 0 12px rgba(0, 0, 0, 0.6);
   }
 }
