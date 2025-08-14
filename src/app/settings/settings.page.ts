@@ -2,14 +2,14 @@ import { Preferences } from '@capacitor/preferences';
 import { NotTodoService } from '../services/not-todo.service';
 import { cancelScheduledNotifications, scheduleRandomNotifications } from '../utility/notification.util';
 import { signal, effect, Component } from '@angular/core';
-import { IonHeader, IonContent, IonToggle, IonLabel, IonItem, IonToolbar, IonTitle, IonText } from "@ionic/angular/standalone";
+import { IonHeader, IonContent, IonToggle, IonLabel, IonItem, IonText, IonNote } from "@ionic/angular/standalone";
 import { ToolbarComponent } from "../components/toolbar/toolbar.component";
 
 @Component({
   selector: 'app-home',
   templateUrl: 'settings.page.html',
   styleUrls: ['settings.page.scss'],
-  imports: [IonText, IonTitle, IonToolbar, IonItem, IonLabel, IonToggle, IonContent, IonHeader, IonItem, IonLabel, IonHeader, IonContent, ToolbarComponent],
+  imports: [IonNote, IonText, IonItem, IonLabel, IonToggle, IonContent, IonHeader, IonItem, IonLabel, IonHeader, IonContent, ToolbarComponent],
 })
 export class SettingsPage {
   remindersEnabled = signal(false);

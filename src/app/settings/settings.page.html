@@ -8,10 +8,11 @@
   </ion-text>
 
   <ion-item>
-    <ion-label>Do Not Remind Me</ion-label>
     <ion-toggle
-      [checked]="remindersEnabled()"
-      (ionChange)="remindersEnabled.set($event.detail.checked)">
+    [checked]="remindersEnabled()"
+    (ionChange)="remindersEnabled.set($event.detail.checked)">
+    <ion-label>Do Not Remind Me</ion-label>
+    <ion-note>Not what you want, what you need</ion-note>
     </ion-toggle>
   </ion-item>
 </ion-content>
