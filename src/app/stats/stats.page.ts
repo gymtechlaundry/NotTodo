@@ -42,7 +42,7 @@ export class StatsPage {
     if (!chartElement) return;
     
     const data = this.items.map(item => item.failCount);
-    const labels = this.items.map(item => item.category || 'Uncategorized');
+    const labels = this.items.map(item => item.title || 'UnTitled');
     const total = data.reduce((sum, val) => sum + val, 0);
     
     const config: ChartConfiguration<'pie'> = {
