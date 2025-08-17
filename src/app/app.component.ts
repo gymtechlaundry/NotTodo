@@ -2,10 +2,12 @@ import { Component, inject } from '@angular/core';
 import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
 import { Capacitor } from '@capacitor/core';
 import { Platform } from '@ionic/angular';
+import { SplashScreen } from '@capacitor/splash-screen';
 import { LocalNotifications } from '@capacitor/local-notifications';
 
 @Component({
   selector: 'app-root',
+  standalone: true,
   templateUrl: 'app.component.html',
   imports: [IonApp, IonRouterOutlet],
 })
@@ -32,5 +34,12 @@ export class AppComponent {
         console.error('[X] Failed to request notification permissions', error);      
       }
     }
+
+    try {
+      await SplashScreen.hide({ fadeOutDuration: 200 });
+    } catch (_) {
+      // no-op
+    }
+    setTimeout(() => SplashScreen.hide(), 3000); // safety fallback
   }
 }
