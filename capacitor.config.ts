@@ -1,8 +1,8 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'io.ionic.starter',
-  appName: 'not-todo-app',
+  appId: 'com.darcsoftware.nottodo',
+  appName: 'Not Todo',
   webDir: 'www',
   plugins: {
     LocalNotifications: {
