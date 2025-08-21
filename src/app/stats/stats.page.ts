@@ -66,18 +66,28 @@ export class StatsPage {
             labels: {
               generateLabels: (chart) => {
                 const dataset = chart.data.datasets[0];
-                const bgColors = dataset.backgroundColor as string[];
-                return chart.data.labels!.map((label, i) => {
-                  const value = dataset.data[i] as number;
-                  const percent = ((value / total) * 100).toFixed(0);
+                const data = (dataset.data as Array<number | string | null | undefined>)
+                  .map(v => Number(v) || 0);
+                const safeTotal = data.reduce((s, v) => s + v, 0);
+
+                const bgColors = (dataset.backgroundColor as string[]) || [];
+
+                return (chart.data.labels ?? []).map((rawLabel, i) => {
+                  const label = (rawLabel as string) || 'Untitled';
+                  const value = data[i] ?? 0;
+
+                  const percent = safeTotal > 0
+                    ? Math.round((value / safeTotal) * 100)
+                    : 0;
+
                   return {
                     text: `${label} (${percent}%)`,
-                    fillStyle: bgColors[i],
+                    fillStyle: bgColors[i % bgColors.length] || '#999',
                     strokeStyle: '#fff',
                     lineWidth: 1,
                     usePointStyle: true,
                     hidden: !chart.getDataVisibility(i),
-                    index: i
+                    index: i,
                   };
                 });
               }
