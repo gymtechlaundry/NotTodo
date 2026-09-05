@@ -31,9 +31,9 @@
       </ion-col>
   
       <ion-col size="6">
-        <ion-button (click)="save()" expand="block" fill="clear" shape="round">
+        <ion-button (click)="save()" expand="block" fill="clear" shape="round" [disabled]="!title.trim()">
           Save
-       </ion-button>
+        </ion-button>
       </ion-col>
     </ion-row>
   </div>

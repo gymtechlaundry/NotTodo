@@ -1,13 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { IonFooter, IonHeader, IonContent, IonText, IonButton, IonIcon, IonLabel, IonItem, IonList, IonItemSliding, IonItemOptions, IonItemOption } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { addOutline } from 'ionicons/icons';
 import { NotTodoService } from '../services/not-todo.service';
-import { CommonModule, } from '@angular/common';
+import { ReminderService } from '../services/reminder.service';
+import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { todoItems } from '../utility/global-signals';
-import { ToolbarComponent } from "../components/toolbar/toolbar.component";
+import { ToolbarComponent } from '../components/toolbar/toolbar.component';
 
 @Component({
   selector: 'app-home',
@@ -16,13 +17,16 @@ import { ToolbarComponent } from "../components/toolbar/toolbar.component";
   imports: [IonFooter, IonItemOption, IonItemOptions, IonItemSliding, FormsModule, IonList, IonItem, IonLabel, IonIcon, IonButton, IonText, IonHeader, IonContent, CommonModule, ToolbarComponent],
 })
 export class HomePage implements OnInit {
-  todoItems = todoItems;
-  newItem: string = ''
+  private readonly notTodoService = inject(NotTodoService);
+  private readonly reminderService = inject(ReminderService);
+  private readonly router = inject(Router);
 
-  constructor(private notTodoService: NotTodoService, private router: Router) {
+  todoItems = todoItems;
+
+  constructor() {
     addIcons({
       addOutline
-    })
+    });
   }
 
   async ngOnInit() {
@@ -38,20 +42,20 @@ export class HomePage implements OnInit {
     this.todoItems.set(await this.notTodoService.getItems());
   }
 
-  async logFail(id:number) {
+  async logFail(id: number) {
     await this.notTodoService.logFail(id);
     await this.loadItems();
+    await this.reminderService.syncSchedule();
   }
 
   goToAddItem() {
-    this.router.navigateByUrl('add-item')
+    this.router.navigateByUrl('/add-item');
   }
 
   async deleteItemById(id: number, slidingItem: IonItemSliding) {
-    await this.notTodoService.deleteItemById(id)
+    await this.notTodoService.deleteItemById(id);
     this.todoItems.update(currentItems => currentItems.filter(item => item.id !== id));
     slidingItem.close();
+    await this.reminderService.syncSchedule();
   }
-
-
 }

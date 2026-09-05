@@ -51,19 +51,21 @@ ion-content {
   }
 }
 
+.empty {
+  text-align: center;
+  color: #bbbbbb;
+  padding: 2rem 1.5rem;
+  font-style: italic;
+}
+
 .chart-container {
-  display: flex;
-  justify-content: center;
-  align-items: baseline;
-  width: 100%;
-  padding: 1.5rem 0;
+  position: relative;
+  width: min(100%, 360px);
+  height: 280px;
+  margin: 0 auto;
+  padding: 0.5rem 0 1.5rem;
 
   canvas {
-    max-width: 90%;
-    height: auto !important;
-    // background: #1e1e1e;
-    border-radius: 16px;
-    padding: 1rem;
-    // box-shadow: 0 0 12px rgba(0, 0, 0, 0.6);
+    max-width: 100%;
   }
 }

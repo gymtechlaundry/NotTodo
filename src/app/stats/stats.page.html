@@ -7,7 +7,16 @@
     <h3>See where you slip up most often.</h3>
   </ion-text>
 
-  <div class="chart-container">
+  <div class="stats-section" *ngIf="totalFails > 0">
+    <h2>Total slips</h2>
+    <p class="fail-count">{{ totalFails }}</p>
+  </div>
+
+  <p class="empty" *ngIf="totalFails === 0">
+    No slips yet. Tap an item on Home when you slip up.
+  </p>
+
+  <div class="chart-container" *ngIf="totalFails > 0">
     <canvas id="chart"></canvas>
   </div>
 </ion-content>
