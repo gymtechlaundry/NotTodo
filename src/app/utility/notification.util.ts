@@ -1,83 +1,156 @@
-import { LocalNotifications } from "@capacitor/local-notifications";
-import { NotToDoItem } from "../models/not-todo-item";
+import { Capacitor } from '@capacitor/core';
+import { LocalNotifications } from '@capacitor/local-notifications';
+import { NotToDoItem } from '../models/not-todo-item';
 
-export async function cancelScheduledNotifications() {
-  // Remove anything already shown in the notification center
-  await LocalNotifications.removeAllDeliveredNotifications();
+export const REMINDERS_PER_DAY = 3;
+export const REMINDER_START_HOUR = 8;
+export const REMINDER_END_HOUR = 22;
+const REMINDER_IDS = [1001, 1002, 1003];
+const TEST_NOTIFICATION_ID = 1999;
 
-  // Cancel EVERYTHING that’s pending (scheduled but not shown yet)
-  const pending = await LocalNotifications.getPending();
-  if (pending.notifications.length) {
-    await LocalNotifications.cancel({ notifications: pending.notifications });
+export async function cancelScheduledNotifications(): Promise<void> {
+  try {
+    await LocalNotifications.removeAllDeliveredNotifications();
+  } catch (error) {
+    console.warn('[notifications] Failed to clear delivered notifications', error);
+  }
+
+  try {
+    const pending = await LocalNotifications.getPending();
+    if (pending.notifications.length) {
+      await LocalNotifications.cancel({ notifications: pending.notifications });
+    }
+  } catch (error) {
+    console.warn('[notifications] Failed to cancel pending notifications', error);
+  }
+}
+
+export async function ensureNotificationPermission(request: boolean): Promise<boolean> {
+  try {
+    const current = await LocalNotifications.checkPermissions();
+    if (current.display === 'granted') {
+      return true;
+    }
+    if (!request) {
+      return false;
+    }
+    const result = await LocalNotifications.requestPermissions();
+    return result.display === 'granted';
+  } catch (error) {
+    console.warn('[notifications] Permission check failed', error);
+    return false;
   }
 }
 
 export async function scheduleRandomNotifications(
   items: NotToDoItem[],
-  timesPerDay: number = 3
-) {
-  if (!items?.length || timesPerDay <= 0) return;
+  timesPerDay: number = REMINDERS_PER_DAY,
+  options: { requestPermission?: boolean } = {}
+): Promise<boolean> {
+  const granted = await ensureNotificationPermission(!!options.requestPermission);
+  if (!granted) {
+    return false;
+  }
 
-  // Ensure permission first (no-op if already granted)
-  await LocalNotifications.requestPermissions();
-
-  // Start clean
   await cancelScheduledNotifications();
 
-  // Dedup by title, keep the first occurrence
-  const fails = [
-    ...new Map(
-      items.filter(i => i.failCount > 0).map(item => [item.title, item])
-    ).values(),
-  ];
-  if (!fails.length) return;
-
-  const notifications = [];
-  for (let i = 0; i < timesPerDay; i++) {
-    const randomItem = fails[Math.floor(Math.random() * fails.length)];
-    const fireDate = getRandomFutureTimeWithinWindow(8, 22); // 8AM–10PM
-
-    notifications.push({
-      title: "NOT To-Do Reminder",
-      body: `Reminder: Don't "${randomItem.title}" today!`,
-      id: makeNotificationId(i),
-      schedule: { at: fireDate },
-    });
+  if (!items?.length || timesPerDay <= 0) {
+    return true;
   }
 
-  await LocalNotifications.schedule({ notifications });
-  console.log(`[🔔 Scheduled ${notifications.length} notifications]`);
+  const times = pickDistinctTimes(timesPerDay, REMINDER_START_HOUR, REMINDER_END_HOUR);
+  const native = Capacitor.isNativePlatform();
+  const notifications = times.map((time, index) => {
+    const item = items[Math.floor(Math.random() * items.length)];
+    return {
+      id: REMINDER_IDS[index] ?? 1000 + index,
+      title: 'NOT To-Do Reminder',
+      body: `Reminder: Don't "${item.title}" today!`,
+      sound: 'default',
+      schedule: native
+        ? {
+            on: { hour: time.hour, minute: time.minute },
+            repeats: true,
+            allowWhileIdle: true,
+          }
+        : {
+            at: nextOccurrence(time.hour, time.minute),
+            allowWhileIdle: true,
+          },
+    };
+  });
+
+  try {
+    await LocalNotifications.schedule({ notifications });
+    console.log(`[notifications] Scheduled ${notifications.length} reminder(s)`);
+    return true;
+  } catch (error) {
+    console.error('[notifications] Failed to schedule reminders', error);
+    return false;
+  }
 }
 
-/**
- * Returns a random Date in the future, within [startHour, endHour).
- * If the random time today has already passed, it shifts to tomorrow.
- */
-function getRandomFutureTimeWithinWindow(startHour: number, endHour: number): Date {
-  if (endHour <= startHour) {
-    throw new Error("endHour must be greater than startHour");
+export async function scheduleTestNotification(item: NotToDoItem): Promise<boolean> {
+  const granted = await ensureNotificationPermission(true);
+  if (!granted) {
+    return false;
   }
 
-  const now = new Date();
+  try {
+    await LocalNotifications.schedule({
+      notifications: [
+        {
+          id: TEST_NOTIFICATION_ID,
+          title: 'NOT To-Do Reminder',
+          body: `Reminder: Don't "${item.title}" today!`,
+          sound: 'default',
+          schedule: {
+            at: new Date(Date.now() + 3000),
+            allowWhileIdle: true,
+          },
+        },
+      ],
+    });
+    return true;
+  } catch (error) {
+    console.error('[notifications] Failed to schedule test reminder', error);
+    return false;
+  }
+}
+
+export function pickDistinctTimes(
+  count: number,
+  startHour: number,
+  endHour: number
+): { hour: number; minute: number }[] {
+  if (endHour <= startHour) {
+    throw new Error('endHour must be greater than startHour');
+  }
+
+  const slots: { hour: number; minute: number }[] = [];
+  const seen = new Set<string>();
+  let attempts = 0;
+
+  while (slots.length < count && attempts < 200) {
+    attempts += 1;
+    const hour = Math.floor(Math.random() * (endHour - startHour)) + startHour;
+    const minute = Math.floor(Math.random() * 60);
+    const key = `${hour}:${String(minute).padStart(2, '0')}`;
+    if (seen.has(key)) {
+      continue;
+    }
+    seen.add(key);
+    slots.push({ hour, minute });
+  }
+
+  return slots;
+}
+
+export function nextOccurrence(hour: number, minute: number, now = new Date()): Date {
   const candidate = new Date(now);
-
-  const hour = Math.floor(Math.random() * (endHour - startHour)) + startHour; // [start, end-1]
-  const minute = Math.floor(Math.random() * 60);
-
   candidate.setHours(hour, minute, 0, 0);
-
-  // If that time is in the past (today), schedule for tomorrow at the same time
   if (candidate.getTime() <= now.getTime()) {
     candidate.setDate(candidate.getDate() + 1);
   }
-
   return candidate;
-}
-
-/** Generates a reasonably unique numeric ID */
-function makeNotificationId(suffix = 0): number {
-  // 53-bit safe combo of timestamp + random + loop suffix
-  const ts = Date.now() % 1_000_000_000; // keep it smaller
-  const rnd = Math.floor(Math.random() * 1_000_000);
-  return Number(`${ts}${rnd}${suffix}`.slice(-9)); // stays within int range most platforms expect
 }

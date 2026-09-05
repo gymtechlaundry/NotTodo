@@ -4,6 +4,8 @@ import { Capacitor } from '@capacitor/core';
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@capacitor/splash-screen';
 import { LocalNotifications } from '@capacitor/local-notifications';
+import { NotTodoService } from './services/not-todo.service';
+import { ReminderService } from './services/reminder.service';
 
 @Component({
   selector: 'app-root',
@@ -13,6 +15,8 @@ import { LocalNotifications } from '@capacitor/local-notifications';
 })
 export class AppComponent {
   private platform = inject(Platform);
+  private notTodoService = inject(NotTodoService);
+  private reminderService = inject(ReminderService);
 
   constructor() {
     this.initializeApp();
@@ -21,18 +25,29 @@ export class AppComponent {
   async initializeApp() {
     await this.platform.ready();
 
-    // Request notification permission
+    try {
+      await this.notTodoService.initDB();
+    } catch (error) {
+      console.error('[X] Failed to initialize storage', error);
+    }
+
     if (Capacitor.isNativePlatform()) {
       try {
         const result = await LocalNotifications.requestPermissions();
-        if (result.display == 'granted') {
+        if (result.display === 'granted') {
           console.log('[✓] Notification permission granted');
         } else {
-          console.warn('[!] Notification permission denied');  
-        } 
-      } catch (error) { 
-        console.error('[X] Failed to request notification permissions', error);      
+          console.warn('[!] Notification permission denied');
+        }
+      } catch (error) {
+        console.error('[X] Failed to request notification permissions', error);
       }
+    }
+
+    try {
+      await this.reminderService.init();
+    } catch (error) {
+      console.error('[X] Failed to initialize reminders', error);
     }
 
     try {

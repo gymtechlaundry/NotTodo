@@ -7,7 +7,11 @@
   </ion-text>
 
 
-  <ion-list>
+  <p class="empty" *ngIf="todoItems().length === 0">
+    Nothing to avoid yet. Add a not-to-do and tap it when you slip.
+  </p>
+
+  <ion-list *ngIf="todoItems().length">
     <ion-item-sliding *ngFor="let item of todoItems()" #slidingItem>
         <ion-item button (click)="logFail(item.id)">
           <ion-label class="container">

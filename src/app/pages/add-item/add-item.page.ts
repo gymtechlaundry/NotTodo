@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonItem, IonRow, IonCol, IonButton, IonInput, IonText } from '@ionic/angular/standalone';
 import { NavController } from '@ionic/angular';
 import { NotTodoService } from 'src/app/services/not-todo.service';
-import { Router } from '@angular/router';
+import { ReminderService } from 'src/app/services/reminder.service';
 import { todoItems } from 'src/app/utility/global-signals';
 import { ToolbarComponent } from "../../components/toolbar/toolbar.component";
 
@@ -19,7 +19,11 @@ export class AddItemPage implements OnInit {
   title: string = '';
   category: string = '';
   todoItems = todoItems;
-  constructor(private navCtrl: NavController, private notTodoService: NotTodoService, private router: Router) { }
+  constructor(
+    private navCtrl: NavController,
+    private notTodoService: NotTodoService,
+    private reminderService: ReminderService,
+  ) { }
 
   ngOnInit() {
   }
@@ -29,9 +33,11 @@ export class AddItemPage implements OnInit {
   }
 
   async save() {
-    if (!this.title) return;
-    await this.notTodoService.addItem(this.title, this.category);
+    const title = this.title.trim();
+    if (!title) return;
+    await this.notTodoService.addItem(title, this.category.trim());
     todoItems.set(await this.notTodoService.getItems());
+    await this.reminderService.syncSchedule();
     this.navCtrl.back();
   }
 }

@@ -16,7 +16,8 @@ const config: CapacitorConfig = {
       androidScaleType: 'CENTER_CROP'
     },
     LocalNotifications: {
-      smallIcon: 'ic_stat_icon_config_sample',
+      smallIcon: 'ic_stat_nottodo',
+      iconColor: '#2563EB',
     }
   }
 };

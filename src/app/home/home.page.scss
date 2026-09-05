@@ -20,6 +20,13 @@ ion-content {
         margin-top: 10px;
     }
 
+    .empty {
+        text-align: center;
+        color: #bbbbbb;
+        padding: 2rem 1.5rem;
+        font-style: italic;
+    }
+
     ion-list {
         margin: 10px 10px 15px;
         .container {
