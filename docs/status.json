@@ -1,0 +1,33 @@
+{
+  "slug": "not-todo",
+  "name": "Not ToDo: Break Bad Habits",
+  "stage": "shipped",
+  "kind": "capacitor",
+  "updated": "2026-09-05",
+  "focus": "maintain",
+  "bundleId": "com.darcsoftware.nottodo",
+  "revenue": {
+    "model": "free",
+    "path": "distribution-first",
+    "note": "Already live on App Store and Play. Grandfathered DARC bundle ID. Do not change it."
+  },
+  "platforms": {
+    "ios": {
+      "marketing": "1.4.1",
+      "build": "App Store",
+      "track": "production",
+      "note": "Public App Store 1.4.1. Local package.json is 1.4.2 — next iOS binary. Apple ID 6751084588. Seller Devin Cooper."
+    },
+    "android": {
+      "marketing": "1.0.0",
+      "versionCode": "Play",
+      "track": "production",
+      "note": "Live on Play as com.darcsoftware.nottodo."
+    }
+  },
+  "next": [
+    "Triage and fix bugs in this workspace. Do not change bundle ID com.darcsoftware.nottodo."
+  ],
+  "blockers": [],
+  "backlog": null
+}
