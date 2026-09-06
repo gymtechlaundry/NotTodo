@@ -18,7 +18,7 @@ Filled packet for Hyperion (2026-09). Click path: `~/Projects/hyperion-studio/Pl
 
 | Track | Ready? |
 | --- | --- |
-| App Store | **Live** 1.4.1 — next binary must be marketing ≥ 1.4.2 with an unused iOS build |
+| App Store | **Live** 1.4.1 — next binary must be marketing ≥ 1.5.0 with an unused iOS build |
 | Play production | **Live** 1.0.0 — next AAB must bump `versionCode` and should meet current Play targetSdk |
 | Legal URLs | **Live** https://hyperionappstudio.com/nottodo/ (privacy, terms, support) |
 
@@ -101,7 +101,7 @@ No account. No cloud. Your list stays on the device.
 ### What’s New / release notes
 
 ```
-Optional app lock with Face ID, fingerprint, or your device passcode. Privacy, terms, and support now live at hyperionappstudio.com/nottodo.
+Optional app lock with Face ID, fingerprint, or your device passcode. Default categories (Productivity Killer, Health, Money, Relationships, Digital) plus extras you add. Privacy, terms, and support at hyperionappstudio.com/nottodo.
 ```
 
 ### Keywords (iOS)
@@ -273,8 +273,8 @@ Free download; no IAP / subscriptions in this binary
 
 | Store | Marketing | Build / versionCode | Notes |
 | --- | --- | --- | --- |
-| iOS | 1.4.2 | 8 | Live store is 1.4.1 (build 7 from 2025-08-28 archives). Do not reuse 6 or 7. |
-| Android | 1.4.2 | 7 | Live Play is 1.0.0. targetSdk / compileSdk 36 (Play update floor as of 31 Aug 2026). |
+| iOS | 1.5.0 | 9 | Live store is 1.4.1 (build 7). Do not reuse 6, 7, or 8. |
+| Android | 1.5.0 | 8 | Live Play is 1.0.0. targetSdk / compileSdk 36 (Play update floor as of 31 Aug 2026). |
 
 ---
 
@@ -282,6 +282,6 @@ Free download; no IAP / subscriptions in this binary
 
 - [x] Deploy `website/nottodo/` to Cloudflare Pages; confirm legal URLs return 200
 - [ ] Device-smoke `docs/SMOKE.md` including app lock and reminders on TestFlight / Play internal (no live-reload `server.url`)
-- [x] Bump iOS to 1.4.2 (8); Android versionName 1.4.2 / versionCode 7; targetSdk 36
+- [x] Bump iOS to 1.5.0 (9); Android versionName 1.5.0 / versionCode 8; targetSdk 36
 - [x] Production `npm run build:prod` + `npx cap sync`; confirm no `server.url`
 - [ ] Submit TestFlight internal / Play internal, then production only after smoke

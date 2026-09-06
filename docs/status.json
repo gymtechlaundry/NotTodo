@@ -16,17 +16,17 @@
       "marketing": "1.4.1",
       "build": 7,
       "track": "production",
-      "note": "Live on App Store 1.4.1 (build 7, archived 2025-08-28). Repo next is 1.4.2 (8)."
+      "note": "Live on App Store 1.4.1 (build 7, archived 2025-08-28). Repo next is 1.5.0 (9)."
     },
     "android": {
       "marketing": "1.0.0",
       "versionCode": "Play",
       "track": "production",
-      "note": "Live on Play 1.0.0. Repo next is 1.4.2 (versionCode 7, targetSdk 36). https://play.google.com/store/apps/details?id=com.darcsoftware.nottodo"
+      "note": "Live on Play 1.0.0. Repo next is 1.5.0 (versionCode 8, targetSdk 36). https://play.google.com/store/apps/details?id=com.darcsoftware.nottodo"
     }
   },
   "next": [
-    "Upload 1.4.2 to TestFlight internal (iOS build 8) and Play internal (versionCode 7, targetSdk 36). Device-smoke reminders and app lock before production. Do not change bundle ID com.darcsoftware.nottodo."
+    "Upload 1.5.0 to TestFlight internal (iOS build 9) and Play internal (versionCode 8, targetSdk 36). Device-smoke reminders, app lock, and categories before production. Do not change bundle ID com.darcsoftware.nottodo."
   ],
   "blockers": [],
   "backlog": null,
