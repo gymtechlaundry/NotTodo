@@ -48,7 +48,7 @@ describe('CategoryService', () => {
   it('rejects empty, duplicate, and default deletes', async () => {
     await setup();
     expect(await service.add('   ')).toBe('empty');
-    expect(await service.add('Productivity')).toBe('duplicate');
+    expect(await service.add('Productivity Killer')).toBe('duplicate');
     expect(await service.add('health')).toBe('duplicate');
     expect(await service.remove('Health')).toBeFalse();
   });

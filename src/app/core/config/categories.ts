@@ -1,9 +1,9 @@
 export const DEFAULT_CATEGORIES = [
-  'Screen time',
-  'Productivity',
-  'Food & drink',
-  'Spending',
+  'Productivity Killer',
   'Health',
+  'Money',
+  'Relationships',
+  'Digital',
 ] as const;
 
 export const CATEGORY_MAX_LENGTH = 40;
