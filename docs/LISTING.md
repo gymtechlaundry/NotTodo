@@ -25,7 +25,7 @@ No account. No cloud. Your list stays on the device.
 ## What’s New (this version)
 
 ```
-Optional app lock with Face ID, fingerprint, or your device passcode. Privacy, terms, and support now live at hyperionappstudio.com/nottodo. Daily reminders and tab navigation fixes from the last update.
+Optional app lock with Face ID, fingerprint, or your device passcode. Default categories (Productivity Killer, Health, Money, Relationships, Digital) plus extras you add. Privacy, terms, and support at hyperionappstudio.com/nottodo.
 ```
 
 ## Keywords (iOS)
