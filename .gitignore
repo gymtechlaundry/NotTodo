@@ -71,3 +71,13 @@ Thumbs.db
 
 # Play listing PNGs live next to the repo, not in git
 /store-listing/
+
+# Native secrets / signing (never commit)
+.env
+.env.*
+!.env.example
+android/key.properties
+android/*.jks
+android/*.keystore
+**/google-services.json
+**/GoogleService-Info.plist

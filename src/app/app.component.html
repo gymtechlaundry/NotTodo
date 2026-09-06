@@ -1,3 +1,14 @@
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+  <ion-router-outlet
+    [attr.aria-hidden]="appLock.locked()"
+    [attr.inert]="appLock.locked() ? '' : null"></ion-router-outlet>
+
+  @if (appLock.locked()) {
+    <div class="app-lock-gate" role="dialog" aria-modal="true" aria-label="Not ToDo is locked">
+      <img src="assets/NewLogo.png" alt="" />
+      <h1>Not ToDo</h1>
+      <p>Locked so only you can see this list.</p>
+      <ion-button expand="block" (click)="unlock()">Unlock</ion-button>
+    </div>
+  }
 </ion-app>

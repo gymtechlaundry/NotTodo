@@ -1,5 +1,5 @@
 {
-  "name": "not-todo-app",
+  "name": "Not ToDo",
   "integrations": {
     "capacitor": {}
   },

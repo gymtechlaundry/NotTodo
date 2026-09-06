@@ -25,4 +25,21 @@
     (click)="sendTestReminder()">
     Send a test reminder
   </ion-button>
+
+  <ion-item>
+    <ion-toggle
+      [checked]="appLockEnabled()"
+      (ionChange)="onLockToggle($event)">
+      <ion-label>Lock this app</ion-label>
+      <ion-note>Face ID, fingerprint, or device passcode</ion-note>
+    </ion-toggle>
+  </ion-item>
+
+  <div class="legal">
+    <a [href]="privacyUrl" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
+    <a [href]="termsUrl" target="_blank" rel="noopener noreferrer">Terms of Use</a>
+    <a [href]="supportUrl" target="_blank" rel="noopener noreferrer">Support</a>
+    <a [href]="studioUrl" target="_blank" rel="noopener noreferrer">{{ studioCredit }}</a>
+    <p>{{ studioCopyright }}</p>
+  </div>
 </ion-content>
