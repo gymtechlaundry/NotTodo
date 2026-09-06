@@ -31,7 +31,7 @@ Support email:                 support@hyperionappstudio.com
 ```
 
 Site source: `~/Projects/hyperion-studio/website/nottodo/`
-Legal pages go live after a Cloudflare Pages deploy of `website/`. Redeploy after copy edits.
+Legal pages are live on hyperionappstudio.com (re-check with `./scripts/studio-status.sh`). Redeploy after copy edits.
 
 ## Review
 

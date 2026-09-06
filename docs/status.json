@@ -48,23 +48,23 @@
     "legal": [
       {
         "url": "https://hyperionappstudio.com/nottodo/",
-        "status": null,
-        "ok": false
+        "status": 200,
+        "ok": true
       },
       {
         "url": "https://hyperionappstudio.com/nottodo/privacy/",
-        "status": null,
-        "ok": false
+        "status": 200,
+        "ok": true
       },
       {
         "url": "https://hyperionappstudio.com/nottodo/support/",
-        "status": null,
-        "ok": false
+        "status": 200,
+        "ok": true
       },
       {
         "url": "https://hyperionappstudio.com/nottodo/terms/",
-        "status": null,
-        "ok": false
+        "status": 200,
+        "ok": true
       }
     ]
   }
