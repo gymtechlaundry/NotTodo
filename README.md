@@ -1,85 +1,95 @@
-# Not To-Do App
+# Not ToDo
 
-**Break bad habits. Track what *not* to do. Take back your day.**
+**A list of things you should not do.**
 
-The Not To-Do App helps you stay focused by logging and reminding you of the habits you're working to avoid. Unlike traditional to-do lists, this app focuses on what *not* to do—helping you build discipline and avoid time-wasters.
+Add habits you want to avoid. Tap an item when you slip. Stats show where you slip most. Optional daily reminders and an optional Face ID / fingerprint / device-passcode lock.
 
----
+No account. No cloud. Your list stays on the device.
 
-## 🚀 Features
+App id: `com.darcsoftware.nottodo` (grandfathered — never change) · Operator: Hyperion App Studio
 
-- ✅ Log “Not To-Do” habits (e.g., doomscrolling, procrastinating)
-- 📅 Daily randomized reminders to stay on track
-- 🧠 Optional categories to organize failed habits
-- 🔔 Smart notifications toggle
-- 📊 Local SQLite storage (offline-friendly)
-- 🌓 Clean, minimal UI with light/dark mode
+Legal / support: https://hyperionappstudio.com/nottodo/
 
 ---
 
-## 📱 Screenshots
+## Stack
 
-_Coming soon…_
-
----
-
-## 🛠 Tech Stack
-
-- **Frontend:** Ionic + Angular
-- **Storage:** SQLite (via Ionic Native Storage)
-- **Notifications:** Local notifications API
-- **Platform:** iOS & Android (with Capacitor)
+- Ionic Angular (standalone) + Capacitor (iOS / Android)
+- Local SQLite (`@capacitor-community/sqlite`) with a web `localStorage` fallback
+- Local notifications for optional daily reminders
+- Optional app lock via the OS biometric / device-passcode prompt
 
 ---
 
-## 📦 Installation
-
-1. Clone the repo:
-   ```bash
-   git clone https://github.com/yourusername/not-todo-app.git
-   cd not-todo-app
-   ```
-
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-
-3. Run the app:
-   ```bash
-   ionic serve
-   ```
-
----
-
-## 📲 Building for Mobile
-
-To run on a device:
+## Quick start
 
 ```bash
-ionic capacitor add android
-ionic capacitor add ios
-ionic capacitor run android
-ionic capacitor run ios
+npm install
+npm start
+```
+
+List every npm script and what it does:
+
+```bash
+npm run help:scripts
+```
+
+### iOS Simulator & device
+
+```bash
+npm run ios:list
+npm run ios:run
+npm run ios:live
+
+# Physical iPhone live-reload (two terminals):
+npm run start:lan          # terminal 1 — LAN web server on :4200
+npm run ios:live:device    # terminal 2 — attach Cap live-reload to the phone
+
+npm run ios:sync
+npm run release:ios
+```
+
+Never archive a live-reload build (`ios:live` / `ios:live:device`).
+
+### Android
+
+```bash
+npm run release:android
+npm run android:sync
+npm run android:bundle   # Play Store .aab (needs android/key.properties)
+npm run android:apk      # release APK for sideload testing
+```
+
+### Tests
+
+```bash
+npm test
+npm run test:ci
 ```
 
 ---
 
-## 🙌 Coming Soon
+## App surface
 
-- Cloud sync
-- Habit analytics
-- Siri/Alexa voice integration
-- Home screen widgets
-
----
-
-## 🧑‍💻 Author
-
-Built with love by [Your Name](https://your-portfolio-link.com)
+| Area | Route | Notes |
+| --- | --- | --- |
+| Home | `/tabs/home` | List of not-to-dos; tap to increment a fail |
+| Stats | `/tabs/stats` | Where you slip |
+| Settings | `/tabs/settings` | Reminders, optional lock, legal links |
+| Add | `/add-item` | Title + optional category |
 
 ---
 
-## 📄 License
+## Documentation
 
-This project is licensed under the MIT License.
+| Doc | Contents |
+| --- | --- |
+| [docs/PRODUCT.md](./docs/PRODUCT.md) | What this app is |
+| [docs/IDENTITY.md](./docs/IDENTITY.md) | IDs, versions, URLs, signing paths |
+| [docs/SERVICES.md](./docs/SERVICES.md) | Vendors (none in the binary) |
+| [docs/SMOKE.md](./docs/SMOKE.md) | Device checklist |
+| [docs/LISTING.md](./docs/LISTING.md) | Short store copy |
+| [docs/STORE-SUBMISSION.md](./docs/STORE-SUBMISSION.md) | Full App Store + Play packet |
+| [docs/STORE.md](./docs/STORE.md) | Pointers to studio playbooks |
+
+Studio dashboard: `~/Projects/hyperion-studio/catalog/DASHBOARD.md` (refresh with `./scripts/studio-status.sh`).

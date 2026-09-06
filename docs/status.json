@@ -3,7 +3,7 @@
   "name": "Not ToDo: Break Bad Habits",
   "stage": "shipped",
   "kind": "capacitor",
-  "updated": "2026-09-05",
+  "updated": "2026-09-06",
   "focus": "maintain",
   "bundleId": "com.darcsoftware.nottodo",
   "revenue": {
@@ -16,18 +16,56 @@
       "marketing": "1.4.1",
       "build": "App Store",
       "track": "production",
-      "note": "Public App Store 1.4.1. Local package.json is 1.4.2 — next iOS binary. Apple ID 6751084588. Seller Devin Cooper."
+      "note": "Live on App Store 1.4.1 (2026-09-06)."
     },
     "android": {
       "marketing": "1.0.0",
       "versionCode": "Play",
       "track": "production",
-      "note": "Live on Play as com.darcsoftware.nottodo."
+      "note": "Live on Play (public listing 2026-09-06). https://play.google.com/store/apps/details?id=com.darcsoftware.nottodo"
     }
   },
   "next": [
-    "Triage and fix bugs in this workspace. Do not change bundle ID com.darcsoftware.nottodo."
+    "Deploy website/nottodo legal pages to Cloudflare Pages, device-smoke app lock and reminders, then ship a new store binary. Do not change bundle ID com.darcsoftware.nottodo."
   ],
   "blockers": [],
-  "backlog": null
+  "backlog": null,
+  "verified": {
+    "checked": "2026-09-06",
+    "play": {
+      "url": "https://play.google.com/store/apps/details?id=com.darcsoftware.nottodo",
+      "live": true,
+      "status": 200,
+      "error": null
+    },
+    "appStore": {
+      "live": true,
+      "version": "1.4.1",
+      "trackId": 6751084588,
+      "url": "https://apps.apple.com/us/app/not-todo-break-bad-habits/id6751084588?uo=4",
+      "error": null
+    },
+    "legal": [
+      {
+        "url": "https://hyperionappstudio.com/nottodo/",
+        "status": null,
+        "ok": false
+      },
+      {
+        "url": "https://hyperionappstudio.com/nottodo/privacy/",
+        "status": null,
+        "ok": false
+      },
+      {
+        "url": "https://hyperionappstudio.com/nottodo/support/",
+        "status": null,
+        "ok": false
+      },
+      {
+        "url": "https://hyperionappstudio.com/nottodo/terms/",
+        "status": null,
+        "ok": false
+      }
+    ]
+  }
 }

@@ -1,0 +1,35 @@
+.app-lock-gate {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 32px 28px;
+  background: #fffffe;
+  color: #1a1a1a;
+  text-align: center;
+
+  img {
+    height: 88px;
+    width: auto;
+  }
+
+  h1 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+
+  p {
+    margin: 0 0 12px;
+    color: #6b6b6b;
+    font-style: italic;
+  }
+
+  ion-button {
+    width: min(100%, 280px);
+  }
+}
