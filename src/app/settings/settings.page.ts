@@ -2,7 +2,9 @@ import { Component, inject } from '@angular/core';
 import { NotTodoService } from '../services/not-todo.service';
 import { ReminderService } from '../services/reminder.service';
 import { AppLockService } from '../services/app-lock.service';
+import { CategoryService } from '../services/category.service';
 import {
+  AlertController,
   IonHeader,
   IonContent,
   IonToggle,
@@ -11,9 +13,14 @@ import {
   IonText,
   IonNote,
   IonButton,
+  IonList,
+  IonItemSliding,
+  IonItemOptions,
+  IonItemOption,
   ToastController,
 } from '@ionic/angular/standalone';
 import { ToolbarComponent } from '../components/toolbar/toolbar.component';
+import { CATEGORY_MAX_LENGTH, DEFAULT_CATEGORIES } from '../core/config/categories';
 import {
   NOT_TODO_PRIVACY_URL,
   NOT_TODO_SUPPORT_URL,
@@ -36,18 +43,26 @@ import {
     IonContent,
     IonHeader,
     IonButton,
+    IonList,
+    IonItemSliding,
+    IonItemOptions,
+    IonItemOption,
     ToolbarComponent,
   ],
 })
 export class SettingsPage {
   private readonly reminderService = inject(ReminderService);
   private readonly notTodoService = inject(NotTodoService);
+  private readonly categoryService = inject(CategoryService);
   private readonly appLock = inject(AppLockService);
   private readonly toastController = inject(ToastController);
+  private readonly alertController = inject(AlertController);
   private toggleReady = false;
 
   remindersEnabled = this.reminderService.enabled;
   appLockEnabled = this.appLock.enabled;
+  extras = this.categoryService.extras;
+  readonly defaultCategories = DEFAULT_CATEGORIES;
 
   readonly privacyUrl = NOT_TODO_PRIVACY_URL;
   readonly termsUrl = NOT_TODO_TERMS_URL;
@@ -63,7 +78,47 @@ export class SettingsPage {
   async init() {
     await this.reminderService.init();
     await this.appLock.init();
+    await this.categoryService.init();
     this.toggleReady = true;
+  }
+
+  async addCategory() {
+    const alert = await this.alertController.create({
+      header: 'Add category',
+      inputs: [
+        {
+          name: 'name',
+          type: 'text',
+          placeholder: 'e.g. Sleep',
+          attributes: { maxlength: CATEGORY_MAX_LENGTH },
+        },
+      ],
+      buttons: [
+        { text: 'Cancel', role: 'cancel' },
+        { text: 'Add', role: 'confirm' },
+      ],
+    });
+    await alert.present();
+    const { data, role } = await alert.onDidDismiss();
+    if (role !== 'confirm') {
+      return;
+    }
+
+    const result = await this.categoryService.add(data?.values?.name ?? '');
+    if (result === 'empty') {
+      await this.showToast('Enter a category name.');
+      return;
+    }
+    if (result === 'duplicate') {
+      await this.showToast('That category is already on the list.');
+      return;
+    }
+    await this.showToast('Category added.');
+  }
+
+  async deleteCategory(name: string) {
+    const removed = await this.categoryService.remove(name);
+    await this.showToast(removed ? 'Category removed.' : 'Default categories stay on the list.');
   }
 
   async onToggle(event: CustomEvent<{ checked: boolean }>) {
