@@ -5,6 +5,7 @@ import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@capacitor/splash-screen';
 import { LocalNotifications } from '@capacitor/local-notifications';
 import { NotTodoService } from './services/not-todo.service';
+import { CategoryService } from './services/category.service';
 import { ReminderService } from './services/reminder.service';
 import { AppLockService } from './services/app-lock.service';
 
@@ -18,6 +19,7 @@ import { AppLockService } from './services/app-lock.service';
 export class AppComponent {
   private platform = inject(Platform);
   private notTodoService = inject(NotTodoService);
+  private categoryService = inject(CategoryService);
   private reminderService = inject(ReminderService);
   readonly appLock = inject(AppLockService);
 
@@ -30,6 +32,7 @@ export class AppComponent {
 
     try {
       await this.notTodoService.initDB();
+      await this.categoryService.init();
     } catch (error) {
       console.error('[X] Failed to initialize storage', error);
     }
