@@ -14,19 +14,19 @@
   "platforms": {
     "ios": {
       "marketing": "1.4.1",
-      "build": "App Store",
+      "build": 7,
       "track": "production",
-      "note": "Live on App Store 1.4.1 (2026-09-06)."
+      "note": "Live on App Store 1.4.1 (build 7, archived 2025-08-28). Repo next is 1.4.2 (8)."
     },
     "android": {
       "marketing": "1.0.0",
       "versionCode": "Play",
       "track": "production",
-      "note": "Live on Play (public listing 2026-09-06). https://play.google.com/store/apps/details?id=com.darcsoftware.nottodo"
+      "note": "Live on Play 1.0.0. Repo next is 1.4.2 (versionCode 7, targetSdk 36). https://play.google.com/store/apps/details?id=com.darcsoftware.nottodo"
     }
   },
   "next": [
-    "Deploy website/nottodo legal pages to Cloudflare Pages, device-smoke app lock and reminders, then ship a new store binary. Do not change bundle ID com.darcsoftware.nottodo."
+    "Upload 1.4.2 to TestFlight internal (iOS build 8) and Play internal (versionCode 7, targetSdk 36). Device-smoke reminders and app lock before production. Do not change bundle ID com.darcsoftware.nottodo."
   ],
   "blockers": [],
   "backlog": null,
@@ -48,23 +48,23 @@
     "legal": [
       {
         "url": "https://hyperionappstudio.com/nottodo/",
-        "status": null,
-        "ok": false
+        "status": 200,
+        "ok": true
       },
       {
         "url": "https://hyperionappstudio.com/nottodo/privacy/",
-        "status": null,
-        "ok": false
+        "status": 200,
+        "ok": true
       },
       {
         "url": "https://hyperionappstudio.com/nottodo/support/",
-        "status": null,
-        "ok": false
+        "status": 200,
+        "ok": true
       },
       {
         "url": "https://hyperionappstudio.com/nottodo/terms/",
-        "status": null,
-        "ok": false
+        "status": 200,
+        "ok": true
       }
     ]
   }

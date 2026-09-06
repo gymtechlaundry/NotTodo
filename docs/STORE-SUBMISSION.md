@@ -20,7 +20,7 @@ Filled packet for Hyperion (2026-09). Click path: `~/Projects/hyperion-studio/Pl
 | --- | --- |
 | App Store | **Live** 1.4.1 — next binary must be marketing ≥ 1.4.2 with an unused iOS build |
 | Play production | **Live** 1.0.0 — next AAB must bump `versionCode` and should meet current Play targetSdk |
-| Legal URLs | Source in `~/Projects/hyperion-studio/website/nottodo/` — deploy Cloudflare Pages before review of this update |
+| Legal URLs | **Live** https://hyperionappstudio.com/nottodo/ (privacy, terms, support) |
 
 ---
 
@@ -37,7 +37,7 @@ Display name: Not ToDo: Break Bad Habits
 Slug: not-todo
 Bundle ID / applicationId: com.darcsoftware.nottodo
 SKU (iOS): not-todo
-Apple Team ID: UNKNOWN
+Apple Team ID: R5D743J5S2
 App Store Connect Apple ID: 6751084588
 Play Console app ID: com.darcsoftware.nottodo
 Category Apple primary: Productivity
@@ -68,10 +68,10 @@ In-app account delete path: N/A (no accounts; uninstall removes local data)
 
 | Page | URL | Live? |
 | --- | --- | --- |
-| Privacy | https://hyperionappstudio.com/nottodo/privacy/ | After Cloudflare Pages deploy of `website/` |
-| Support | https://hyperionappstudio.com/nottodo/support/ | After deploy |
-| Terms | https://hyperionappstudio.com/nottodo/terms/ | After deploy |
-| Marketing | https://hyperionappstudio.com/nottodo/ | After deploy |
+| Privacy | https://hyperionappstudio.com/nottodo/privacy/ | Yes (200) |
+| Support | https://hyperionappstudio.com/nottodo/support/ | Yes (200) |
+| Terms | https://hyperionappstudio.com/nottodo/terms/ | Yes (200) |
+| Marketing | https://hyperionappstudio.com/nottodo/ | Yes (200) |
 
 Support email: `support@hyperionappstudio.com`
 
@@ -273,15 +273,15 @@ Free download; no IAP / subscriptions in this binary
 
 | Store | Marketing | Build / versionCode | Notes |
 | --- | --- | --- | --- |
-| iOS | 1.4.1 live | App Store | Next upload: marketing ≥ 1.4.2; unused build (repo Xcode next is 6 — confirm unused in ASC) |
-| Android | 1.0.0 live | Play | Next AAB must bump versionCode; confirm Play targetSdk |
+| iOS | 1.4.2 | 8 | Live store is 1.4.1 (build 7 from 2025-08-28 archives). Do not reuse 6 or 7. |
+| Android | 1.4.2 | 7 | Live Play is 1.0.0. targetSdk / compileSdk 36 (Play update floor as of 31 Aug 2026). |
 
 ---
 
 ## 11. Next upload checklist
 
-- [ ] Deploy `website/nottodo/` to Cloudflare Pages; confirm legal URLs return 200
-- [ ] Device-smoke `docs/SMOKE.md` including app lock and reminders (no live-reload `server.url`)
-- [ ] Bump iOS marketing + build; bump Android versionName + versionCode
-- [ ] `npx cap sync` production www into ios/ and android/
-- [ ] Submit TestFlight / Play internal, then production
+- [x] Deploy `website/nottodo/` to Cloudflare Pages; confirm legal URLs return 200
+- [ ] Device-smoke `docs/SMOKE.md` including app lock and reminders on TestFlight / Play internal (no live-reload `server.url`)
+- [x] Bump iOS to 1.4.2 (8); Android versionName 1.4.2 / versionCode 7; targetSdk 36
+- [x] Production `npm run build:prod` + `npx cap sync`; confirm no `server.url`
+- [ ] Submit TestFlight internal / Play internal, then production only after smoke
