@@ -3,7 +3,7 @@
   "name": "Not ToDo: Break Bad Habits",
   "stage": "shipped",
   "kind": "capacitor",
-  "updated": "2026-09-06",
+  "updated": "2026-09-10",
   "focus": "maintain",
   "bundleId": "com.darcsoftware.nottodo",
   "revenue": {
@@ -16,7 +16,7 @@
       "marketing": "1.4.1",
       "build": 7,
       "track": "production",
-      "note": "Live on App Store 1.4.1 (build 7, archived 2025-08-28). Repo next is 1.5.0 (9)."
+      "note": "Live on App Store 1.5.0 (2026-09-10)."
     },
     "android": {
       "marketing": "1.0.0",
@@ -26,12 +26,12 @@
     }
   },
   "next": [
-    "Upload 1.5.0 to TestFlight internal (iOS build 9) and Play internal (versionCode 8, targetSdk 36). Device-smoke reminders, app lock, and categories before production. Do not change bundle ID com.darcsoftware.nottodo."
+    "Upload 1.5.0 Play internal (versionCode 8, targetSdk 36) after Play accepts the new upload key. Device-smoke then production. Do not change bundle ID com.darcsoftware.nottodo."
   ],
   "blockers": [],
   "backlog": null,
   "verified": {
-    "checked": "2026-09-06",
+    "checked": "2026-09-10",
     "play": {
       "url": "https://play.google.com/store/apps/details?id=com.darcsoftware.nottodo",
       "live": true,
@@ -40,7 +40,7 @@
     },
     "appStore": {
       "live": true,
-      "version": "1.4.1",
+      "version": "1.5.0",
       "trackId": 6751084588,
       "url": "https://apps.apple.com/us/app/not-todo-break-bad-habits/id6751084588?uo=4",
       "error": null

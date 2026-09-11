@@ -1,0 +1,6 @@
+# Gitignored. Copy to android/key.properties and fill passwords from
+# 1Password: Hyperion / not-todo / Play upload keystore
+storePassword=
+keyPassword=
+keyAlias=not-todo-upload
+storeFile=/Users/devin/Projects/hyperion-studio/Admin/signing/not-todo/not-todo-upload.jks
