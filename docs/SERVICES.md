@@ -10,7 +10,7 @@ Playbook: `~/Projects/hyperion-studio/Playbooks/secrets.md`.
 Slug:                          not-todo
 Supabase project ref:          none
 Bundle ID:                     com.darcsoftware.nottodo
-1Password vault:               Hyperion / studio (Apple + Play logins only)
+1Password vault:               Hyperion (studio logins + Hyperion / not-todo / Play upload keystore)
 ```
 
 ## Vendors
@@ -18,7 +18,8 @@ Bundle ID:                     com.darcsoftware.nottodo
 | Vendor | Why | Dashboard / IDs (not secrets) | Env names | Vault item | Runtime |
 | --- | --- | --- | --- | --- | --- |
 | Apple | App Store | Apple ID `6751084588` | — | `Hyperion / studio / Apple Developer` | Store listing |
-| Google Play | Play listing | `com.darcsoftware.nottodo` | — | `Hyperion / studio / Google Play` | Store listing |
+| Google Play Console | Play listing | `com.darcsoftware.nottodo` | — | `Hyperion / studio / Google Play` | Store listing |
+| Play upload key | Sign AABs | alias `not-todo-upload` | — | `Hyperion / not-todo / Play upload keystore` | `android/key.properties` (gitignored) |
 | Cloudflare Pages | Legal / support site | `hyperionappstudio.com/nottodo/` | — | `Hyperion / studio / Cloudflare` | Public HTTPS pages |
 
 ## Local files (paths only)
@@ -27,4 +28,7 @@ Bundle ID:                     com.darcsoftware.nottodo
 Play listing assets:           store-listing/ (feature graphic, screenshots, 512 icon)
 Legal site source:             ~/Projects/hyperion-studio/website/nottodo/
 Legal mirrors:                 docs/legal/
+Upload keystore:               ~/Projects/hyperion-studio/Admin/signing/not-todo/not-todo-upload.jks
+Upload certificate (PEM):      ~/Projects/hyperion-studio/Admin/signing/not-todo/not-todo-upload-certificate.pem
+Gradle signing:                android/key.properties (gitignored)
 ```

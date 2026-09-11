@@ -79,5 +79,6 @@ Thumbs.db
 android/key.properties
 android/*.jks
 android/*.keystore
+android/*.pem
 **/google-services.json
 **/GoogleService-Info.plist
