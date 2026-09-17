@@ -274,7 +274,7 @@ Free download; no IAP / subscriptions in this binary
 | Store | Marketing | Build / versionCode | Notes |
 | --- | --- | --- | --- |
 | iOS | 1.5.0 | 9 | Live store is 1.4.1 (build 7). Do not reuse 6, 7, or 8. |
-| Android | 1.5.0 | 8 | Live Play is 1.0.0. targetSdk / compileSdk 36 (Play update floor as of 31 Aug 2026). |
+| Android | 1.5.0 | 9 | Live Play is 1.0.0. Do not reuse versionCode 8 (Play rejected it for 16 KB pages). targetSdk / compileSdk 36. |
 
 ---
 
@@ -282,6 +282,6 @@ Free download; no IAP / subscriptions in this binary
 
 - [x] Deploy `website/nottodo/` to Cloudflare Pages; confirm legal URLs return 200
 - [ ] Device-smoke `docs/SMOKE.md` including app lock and reminders on TestFlight / Play internal (no live-reload `server.url`)
-- [x] Bump iOS to 1.5.0 (9); Android versionName 1.5.0 / versionCode 8; targetSdk 36
+- [x] Bump iOS to 1.5.0 (9); Android versionName 1.5.0 / versionCode 9; targetSdk 36; sqlite 7.0.3 for 16 KB pages
 - [x] Production `npm run build:prod` + `npx cap sync`; confirm no `server.url`
 - [ ] Submit TestFlight internal / Play internal, then production only after smoke
